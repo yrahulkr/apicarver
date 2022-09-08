@@ -1,0 +1,261 @@
+---
+swagger: "2.0"
+info:
+  description: Api enabled from app.
+  version: "2.0"
+  title: Full Stack API App
+  termsOfService: Terms of service
+  contact:
+    name: Angelo Manganiello
+    url: https://github.com/amanganiello90
+    email: angelo.mang@libero.it
+  license:
+    name: Apache License 2.0
+    url: https://raw.githubusercontent.com/amanganiello90/java-angular-web-app/master/LICENSE
+host: localhost:8080
+basePath: /
+tags:
+- name: time-controller
+  description: Time Controller
+- name: user-controller
+  description: User Controller
+paths:
+  /api/times:
+    get:
+      tags:
+      - time-controller
+      summary: times
+      operationId: timesUsingGET
+      consumes:
+      - application/json
+      produces:
+      - '*/*'
+      parameters: []
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/SimpleTime'
+        "401":
+          description: Unauthorized
+        "403":
+          description: Forbidden
+        "404":
+          description: Not Found
+  /api/times/find/{id}:
+    get:
+      tags:
+      - time-controller
+      summary: read
+      operationId: readUsingGET
+      consumes:
+      - application/json
+      produces:
+      - '*/*'
+      parameters:
+      - name: id
+        in: path
+        description: id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/SimpleTime'
+        "401":
+          description: Unauthorized
+        "403":
+          description: Forbidden
+        "404":
+          description: Not Found
+  /api/times/{id}:
+    get:
+      tags:
+      - time-controller
+      summary: save
+      operationId: saveUsingGET
+      consumes:
+      - application/json
+      produces:
+      - '*/*'
+      parameters:
+      - name: id
+        in: path
+        description: id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/SimpleTime'
+        "401":
+          description: Unauthorized
+        "403":
+          description: Forbidden
+        "404":
+          description: Not Found
+  /api/users:
+    get:
+      tags:
+      - user-controller
+      summary: users
+      operationId: usersUsingGET
+      consumes:
+      - application/json
+      produces:
+      - '*/*'
+      parameters: []
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/User'
+        "401":
+          description: Unauthorized
+        "403":
+          description: Forbidden
+        "404":
+          description: Not Found
+    post:
+      tags:
+      - user-controller
+      summary: save
+      operationId: saveUsingPOST
+      consumes:
+      - application/json
+      produces:
+      - '*/*'
+      parameters:
+      - in: body
+        name: user
+        description: user
+        required: true
+        schema:
+          $ref: '#/definitions/User'
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "201":
+          description: Created
+        "401":
+          description: Unauthorized
+        "403":
+          description: Forbidden
+        "404":
+          description: Not Found
+  /api/users/{id}:
+    get:
+      tags:
+      - user-controller
+      summary: read
+      operationId: readUsingGET_1
+      consumes:
+      - application/json
+      produces:
+      - '*/*'
+      parameters:
+      - name: id
+        in: path
+        description: id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/User'
+        "401":
+          description: Unauthorized
+        "403":
+          description: Forbidden
+        "404":
+          description: Not Found
+    put:
+      tags:
+      - user-controller
+      summary: update
+      operationId: updateUsingPUT
+      consumes:
+      - application/json
+      produces:
+      - '*/*'
+      parameters:
+      - name: id
+        in: path
+        description: id
+        required: true
+        type: string
+      - in: body
+        name: user
+        description: user
+        required: true
+        schema:
+          $ref: '#/definitions/User'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/User'
+        "201":
+          description: Created
+        "401":
+          description: Unauthorized
+        "403":
+          description: Forbidden
+        "404":
+          description: Not Found
+    delete:
+      tags:
+      - user-controller
+      summary: delete
+      operationId: deleteUsingDELETE
+      consumes:
+      - application/json
+      produces:
+      - '*/*'
+      parameters:
+      - name: id
+        in: path
+        description: id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "204":
+          description: No Content
+        "401":
+          description: Unauthorized
+        "403":
+          description: Forbidden
+definitions:
+  SimpleTime:
+    type: object
+    properties:
+      id:
+        type: string
+      value:
+        type: string
+  User:
+    type: object
+    properties:
+      email:
+        type: string
+      firstname:
+        type: string
+      id:
+        type: string
+      lastname:
+        type: string
+      username:
+        type: string

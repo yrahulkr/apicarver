@@ -1,0 +1,836 @@
+openapi: 3.0.3
+info:
+  title: OpenAPI definition
+  version: v0
+servers:
+  - url: 'http://localhost:3004/auth'
+    description: Generated server url
+paths:
+  /auth/validate:
+    post:
+      tags:
+        - auth-controller
+      operationId: validateToken
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Token'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Token'
+  /auth/logout:
+    post:
+      tags:
+        - auth-controller
+      operationId: clearToken
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Token'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: string
+  /auth/login:
+    post:
+      tags:
+        - auth-controller
+      operationId: createToken
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Auth'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Token'
+  /booking/:
+    get:
+      operationId: getBookings
+      parameters:
+        - in: query
+          name: roomid
+          required: false
+          schema:
+            type: string
+        - in: cookie
+          name: token
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            '*/*':
+              schema:
+                type: string
+          description: OK
+        '400':
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad Request
+      tags:
+        - booking-controller
+    post:
+      operationId: createBooking
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Booking'
+        required: true
+      responses:
+        '200':
+          content:
+            '*/*':
+              schema:
+                type: string
+          description: OK
+        '400':
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad Request
+      tags:
+        - booking-controller
+  /booking/summary:
+    get:
+      operationId: getSummaries
+      parameters:
+        - in: query
+          name: roomid
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            '*/*':
+              schema:
+                type: string
+          description: OK
+        '400':
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad Request
+      tags:
+        - booking-controller
+  '/booking/{id}':
+    delete:
+      operationId: deleteBooking
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            format: int32
+            type: integer
+        - in: cookie
+          name: token
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            '*/*':
+              schema:
+                type: string
+          description: OK
+        '400':
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad Request
+      tags:
+        - booking-controller
+    get:
+      operationId: getBooking
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            format: int32
+            type: integer
+        - in: cookie
+          name: token
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            '*/*':
+              schema:
+                type: string
+          description: OK
+        '400':
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad Request
+      tags:
+        - booking-controller
+    put:
+      operationId: updateBooking
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            format: int32
+            type: integer
+        - in: cookie
+          name: token
+          required: false
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Booking'
+        required: true
+      responses:
+        '200':
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CreatedBooking'
+          description: OK
+        '400':
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad Request
+      tags:
+        - booking-controller
+  /branding/:
+    get:
+      operationId: getBranding
+      responses:
+        '200':
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Branding'
+          description: OK
+        '400':
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad Request
+      tags:
+        - branding-controller
+    put:
+      operationId: updateBranding
+      parameters:
+        - in: cookie
+          name: token
+          required: false
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Branding'
+        required: true
+      responses:
+        '200':
+          content:
+            '*/*':
+              schema:
+                type: object
+          description: OK
+        '400':
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad Request
+      tags:
+        - branding-controller
+  /message/:
+    get:
+      operationId: getMessages
+      responses:
+        '200':
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Messages'
+          description: OK
+        '400':
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad Request
+      tags:
+        - message-controller
+    post:
+      operationId: createMessage
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Message'
+        required: true
+      responses:
+        '200':
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Message'
+          description: OK
+        '400':
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad Request
+      tags:
+        - message-controller
+  /message/count:
+    get:
+      operationId: getCount
+      responses:
+        '200':
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Count'
+          description: OK
+        '400':
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad Request
+      tags:
+        - message-controller
+  '/message/{id}':
+    delete:
+      operationId: deleteMessage
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            format: int32
+            type: integer
+        - in: cookie
+          name: token
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            '*/*':
+              schema:
+                type: string
+          description: OK
+        '400':
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad Request
+      tags:
+        - message-controller
+    get:
+      operationId: getMessage
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            format: int32
+            type: integer
+      responses:
+        '200':
+          content:
+            '*/*':
+              schema:
+                type: string
+          description: OK
+        '400':
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad Request
+      tags:
+        - message-controller
+  '/message/{id}/read':
+    put:
+      operationId: markAsRead
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            format: int32
+            type: integer
+        - in: cookie
+          name: token
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            '*/*':
+              schema:
+                type: string
+          description: OK
+        '400':
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad Request
+      tags:
+        - message-controller
+  '/report/room/{id}':
+    get:
+      tags:
+        - report-controller
+      operationId: getSpecificRoomReport
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Report'
+  /report/:
+    get:
+      tags:
+        - report-controller
+      operationId: getAllRoomReports
+      parameters:
+        - name: token
+          in: cookie
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Report'
+  '/room/{id}':
+    get:
+      tags:
+        - room-controller
+      operationId: getRoom
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: string
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Error'
+    put:
+      tags:
+        - room-controller
+      operationId: updateRoom
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - name: token
+          in: cookie
+          required: false
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Room'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Room'
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Error'
+    delete:
+      tags:
+        - room-controller
+      operationId: deleteRoom
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - name: token
+          in: cookie
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: string
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Error'
+  /room/:
+    get:
+      tags:
+        - room-controller
+      operationId: getRooms
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Rooms'
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      tags:
+        - room-controller
+      operationId: createRoom
+      parameters:
+        - name: token
+          in: cookie
+          required: false
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Room'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Room'
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    Token:
+      type: object
+      properties:
+        token:
+          type: string
+    Auth:
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+    Booking:
+      properties:
+        bookingdates:
+          $ref: '#/components/schemas/BookingDates'
+        bookingid:
+          format: int32
+          type: integer
+        depositpaid:
+          type: boolean
+        email:
+          type: string
+        firstname:
+          maxLength: 18
+          minLength: 3
+          type: string
+        lastname:
+          maxLength: 30
+          minLength: 3
+          type: string
+        phone:
+          type: string
+        roomid:
+          format: int32
+          minimum: 1
+          type: integer
+      required:
+        - depositpaid
+        - firstname
+        - lastname
+      type: object
+    BookingDates:
+      properties:
+        checkin:
+          format: date
+          type: string
+        checkout:
+          format: date
+          type: string
+      required:
+        - checkin
+        - checkout
+      type: object
+    CreatedBooking:
+      properties:
+        booking:
+          $ref: '#/components/schemas/Booking'
+        bookingid:
+          format: int32
+          type: integer
+      type: object
+    Error:
+      type: object
+      properties:
+        errorCode:
+          type: integer
+          format: int32
+        error:
+          type: string
+        errorMessage:
+          type: string
+        fieldErrors:
+          type: array
+          items:
+            type: string
+    Branding:
+      properties:
+        contact:
+          $ref: '#/components/schemas/Contact'
+        description:
+          maxLength: 500
+          minLength: 3
+          pattern: '[a-zA-Z,&. ]*'
+          type: string
+        logoUrl:
+          type: string
+        map:
+          $ref: '#/components/schemas/Map'
+        name:
+          maxLength: 100
+          minLength: 3
+          pattern: '[A-Za-z& ]*'
+          type: string
+      required:
+        - description
+        - logoUrl
+        - name
+      type: object
+    Contact:
+      properties:
+        address:
+          maxLength: 200
+          minLength: 10
+          type: string
+        email:
+          type: string
+        name:
+          maxLength: 40
+          minLength: 3
+          pattern: '[A-Za-z& ]*'
+          type: string
+        phone:
+          type: string
+      required:
+        - address
+        - email
+        - name
+        - phone
+      type: object
+    Map:
+      properties:
+        latitude:
+          format: double
+          type: number
+        longitude:
+          format: double
+          type: number
+      required:
+        - latitude
+        - longitude
+      type: object
+    Count:
+      properties:
+        count:
+          format: int32
+          type: integer
+      type: object
+    Message:
+      properties:
+        description:
+          maxLength: 2000
+          minLength: 20
+          type: string
+        email:
+          type: string
+        messageid:
+          format: int32
+          type: integer
+        name:
+          type: string
+        phone:
+          maxLength: 21
+          minLength: 11
+          type: string
+        subject:
+          maxLength: 100
+          minLength: 5
+          type: string
+      required:
+        - description
+        - email
+        - name
+        - phone
+        - subject
+      type: object
+    MessageSummary:
+      properties:
+        id:
+          format: int32
+          type: integer
+        name:
+          type: string
+        read:
+          type: boolean
+        subject:
+          type: string
+      type: object
+    Messages:
+      properties:
+        messages:
+          items:
+            $ref: '#/components/schemas/MessageSummary'
+          type: array
+      type: object
+    Entry:
+      type: object
+      properties:
+        start:
+          type: string
+          format: date-time
+        end:
+          type: string
+          format: date-time
+        title:
+          type: string
+    Report:
+      type: object
+      properties:
+        report:
+          type: array
+          items:
+            $ref: '#/components/schemas/Entry'
+    Room:
+      required:
+        - roomName
+        - type
+      type: object
+      properties:
+        roomid:
+          type: integer
+          format: int32
+        roomName:
+          type: string
+        type:
+          pattern: Single|Double|Twin|Family|Suite
+          type: string
+        accessible:
+          type: boolean
+        image:
+          type: string
+        description:
+          type: string
+        features:
+          type: array
+          items:
+            type: string
+        roomPrice:
+          maximum: 999
+          minimum: 1
+          type: integer
+          format: int32
+    Rooms:
+      type: object
+      properties:
+        rooms:
+          type: array
+          items:
+            $ref: '#/components/schemas/Room'

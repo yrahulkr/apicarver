@@ -1,0 +1,142 @@
+[
+	{
+        "duration": 0,
+        "id": 0,
+        "request": {
+            "clazz": "RequestWillBeSent",
+            "headers": [
+               
+            ],
+            "id": 0,
+            "method": "GET",
+            "requestId": "req1",
+            "requestUrl": "http://localhost:8080/api/a",
+            "resourceType": "application/json"
+        },
+        "response": {
+            "clazz": "ResponseReceived",
+            "headers": [
+                
+            ],
+            "id": 2,
+            "message": "200",
+            "method": "UNKNOWN",
+            "requestUrl": "http://localhost:8080/api/a",
+            "resourceType": "application/json",
+            "status": 200
+        },
+        "status": "SUCCESS"
+    },
+    {
+        "duration": 0,
+        "id": 0,
+        "request": {
+            "clazz": "RequestWillBeSent",
+            "headers": [
+               
+            ],
+            "id": 0,
+            "method": "GET",
+            "requestId": "req2",
+            "requestUrl": "http://localhost:8080/api/a",
+            "resourceType": "application/json"
+        },
+        "response": {
+            "clazz": "ResponseReceived",
+            "headers": [
+                
+            ],
+            "id": 2,
+            "message": "200",
+            "method": "UNKNOWN",
+            "requestUrl": "http://localhost:8080/api/a",
+            "resourceType": "application/json",
+            "status": 200
+        },
+        "status": "SUCCESS"
+    },
+    {
+        "duration": 0,
+        "id": 0,
+        "request": {
+            "clazz": "RequestWillBeSent",
+            "headers": [
+               
+            ],
+            "id": 0,
+            "method": "GET",
+            "requestId": "req3",
+            "requestUrl": "http://localhost:8080/api/a",
+            "resourceType": "application/json"
+        },
+        "response": {
+            "clazz": "ResponseReceived",
+            "headers": [
+                
+            ],
+            "id": 2,
+            "message": "200",
+            "method": "UNKNOWN",
+            "requestUrl": "http://localhost:8080/api/a",
+            "resourceType": "application/json",
+            "status": 200
+        },
+        "status": "SUCCESS"
+    },
+    {
+        "duration": 0,
+        "id": 0,
+        "request": {
+            "clazz": "RequestWillBeSent",
+            "headers": [
+               
+            ],
+            "id": 4,
+            "method": "GET",
+            "requestId": "req4",
+            "requestUrl": "http://localhost:8080/api/a",
+            "resourceType": "application/json"
+        },
+        "response": {
+            "clazz": "ResponseReceived",
+            "headers": [
+                
+            ],
+            "id": 2,
+            "message": "200",
+            "method": "UNKNOWN",
+            "requestUrl": "http://localhost:8080/api/a",
+            "resourceType": "application/json",
+            "status": 200
+        },
+        "status": "SUCCESS"
+    },
+    {
+        "duration": 0,
+        "id": 0,
+        "request": {
+            "clazz": "RequestWillBeSent",
+            "headers": [
+               
+            ],
+            "id": 5,
+            "method": "GET",
+            "requestId": "req5",
+            "requestUrl": "http://localhost:8080/api/a",
+            "resourceType": "application/json"
+        },
+        "response": {
+            "clazz": "ResponseReceived",
+            "headers": [
+                
+            ],
+            "id": 2,
+            "message": "200",
+            "method": "UNKNOWN",
+            "requestUrl": "http://localhost:8080/api/a",
+            "resourceType": "application/json",
+            "status": 200
+        },
+        "status": "SUCCESS"
+    },
+]

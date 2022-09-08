@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jmeterTestPlan version="1.2" properties="5.0" jmeter="5.4.1">
+  <org.apache.jorphan.collections.HashTree>
+    <java.lang.String>testPlan</java.lang.String>
+    <org.apache.jorphan.collections.HashTree>
+      <TestPlan testname="Create JMeter Script From Java Code"/>
+      <org.apache.jorphan.collections.HashTree/>
+    </org.apache.jorphan.collections.HashTree>
+    <TestPlan reference="../org.apache.jorphan.collections.HashTree/TestPlan"/>
+    <org.apache.jorphan.collections.HashTree>
+      <ThreadGroup>
+        <intProp name="ThreadGroup.num_threads">1</intProp>
+        <intProp name="ThreadGroup.ramp_time">1</intProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController">
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+          <intProp name="LoopController.loops">1</intProp>
+        </elementProp>
+      </ThreadGroup>
+      <org.apache.jorphan.collections.HashTree>
+        <HTTPSampler__>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain">localhost</stringProp>
+          <intProp name="HTTPSampler.port">3000</intProp>
+          <stringProp name="HTTPSampler.path">/addressbook/index.php</stringProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+        </HTTPSampler__>
+        <org.apache.jorphan.collections.HashTree/>
+      </org.apache.jorphan.collections.HashTree>
+    </org.apache.jorphan.collections.HashTree>
+  </org.apache.jorphan.collections.HashTree>
+</jmeterTestPlan>

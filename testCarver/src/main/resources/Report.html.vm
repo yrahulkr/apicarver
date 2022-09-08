@@ -1,0 +1,629 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css" integrity="sha512-q3eWabyZPc1XTCmF+8/LuE1ozpg5xxn7iO89yfSOd5/oKvyqLngoNGsx8jq92Y8eXJ/IRxQbEC+FGSYxtk2oiw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <style type="text/css">
+      body {
+        padding: 10px 0 10px;
+      }
+      .crawl-path {
+        padding: 20px 0;
+      }
+      .crawl-path .edge {
+        display: inline-block;
+        line-height: 100%;
+        vertical-align: super;
+      }
+      .crawl-path .edge .edge-text {
+        border-bottom: solid 2px black;
+        padding: 0 7px 2px 0;
+        color: #555;
+        font: bold 70% Monaco, Consolas, Menlo, Courier
+      }
+      .crawl-path .edge .edge-arrow {
+        width: 0; 
+        height: 0; 
+        border-top: 10px solid transparent;
+        border-bottom: 10px solid transparent;
+        border-left: 10px solid currentColor;
+        display: inline-block;
+        vertical-align: -100%;
+      }
+
+      .HoverDiv h1, .HoverDiv img {
+      max-width: 100%;
+      text-align:center;
+      -moz-transition: all 0.3s;
+      -webkit-transition: all 0.3s;
+      transition: all 0.3s;
+      /* z-index: 9999; */
+    }
+
+    .HoverDiv:hover h1, .HoverDiv:hover img {
+      -moz-transform: scale(2);
+      -webkit-transform: scale(2);
+      transform: scale(2);
+       z-index:555555 !important;
+
+    }
+    .network-event-card{
+      margin:10px;
+    }
+
+#allButFooter {
+    height: calc(100vh - 60px);
+    overflow: auto;
+}
+    </style>
+
+  </head>
+
+<body>
+    
+  <!--   <nav class="border navbar navbar-light bg-light">
+        
+            <a class="font-weight-bold h4">API Test Results</a>
+        
+        
+    </nav> -->
+    <div id="allButFooter" class="border card" style="">
+       
+
+      <div id="summary_card" class="border card bg-dark text-white " style="margin-bottom:30px">
+        <div class="card-header">
+                   <nav class="navbar navbar-expand-lg navbar-dark bg-secondary text-white">
+
+<!--             <div class="nav pb-2 mt-4 mb-2 border-bottom"> -->
+<!--              <div class="nav-brand">Test results summary</div> -->
+                       <a class="navbar-brand" href="#">Test Results Summary</a>
+
+                       <div class="navbar-nav justify-content-right ml-auto">
+                        <form>
+                          <div class="custom-control custom-switch">
+                            <input type="checkbox" class="custom-control-input" id="themeSwitch" :checked>
+                            <label class="custom-control-label" for="themeSwitch">Switch To Dark Theme</label>
+                          </div>
+                        </form>
+                    </div>
+            </nav>
+        </div>
+            <div class="card-body" id="overallResult">
+
+            </div>
+       </div>
+
+        <div id="details_table_card" class="border card bg-dark text-white">
+        <div class="card-header">
+       <nav class="navbar navbar-expand-lg navbar-dark bg-secondary text-light ">
+
+          <a class="navbar-brand" href="#">Method Results</a>
+           <div class="nav-item nav-link font-weight-bold">
+                              loaded
+                             <span id="loadedStatus" class="badge badge-info"> </span>
+                  </div>
+
+<!-- 
+                           <div class="col "> <div class="btn btn-info" data-toggle="collapse" href=".all" aria-expanded="true" aria-controls=".all"> Total </div> <span class="badge badge-pill badge-info"> ${methodResults.length}</span> </div>
+           <div class="col "> <div class="btn btn-primary" data-toggle="collapse" href=".success" aria-expanded="true" aria-controls=".success"> Passed </div> <span class="badge badge-pill badge-primary">${passed.length} </span> </div>
+           <div class="col "> <div class="btn btn-danger" data-toggle="collapse" href=".failure" aria-expanded="true" aria-controls=".failure"> Failed </div> <span class="badge badge-pill badge-danger">${failed.length}</span>  </div>
+           <div class="col "> <div class="btn btn-warning" data-toggle="collapse" href=".skipped" aria-expanded="true" aria-controls=".skipped"> Skipped </div> <span class="badge badge-pill badge-warning"> ${skipped.length} </span> </div>
+           <div class="col "> Duration(ms) : ${totalDuration} </div>
+ -->
+            <ul class="nav navbar-nav ml-auto justify-content-right flex-column flex-sm-row">
+                 
+<!--                   <li class="nav-item nav-link">
+                             <b> total </b>
+                              <input id="toggleStatus_all" type="checkbox" data-toggle="collapse" href=".all" aria-expanded="true" aria-controls=".all"> </input>
+                                 <span id="loadedStatus_all" class="badge badge-info"> </span>
+
+                  </li> -->
+                  <li class="nav-item nav-link font-weight-bold">
+                             passed 
+                              <input id="toggleStatus_success" type="checkbox" data-toggle="collapse" href=".success" aria-expanded="true" aria-controls=".success"> </input>
+                                                           <span id="loadedStatus_success" class="badge badge-success"> </span>
+
+                  </li>
+                  <li class="nav-item nav-link font-weight-bold">
+                              failed 
+                              <input id="toggleStatus_failure" type="checkbox" data-toggle="collapse" href=".failure" aria-expanded="true" aria-controls=".failure"> </input>
+                                                           <span id="loadedStatus_failure" class="badge badge-danger"> </span>
+
+                  </li>
+                  <li class="nav-item nav-link font-weight-bold">
+                              skipped 
+                             <input id="toggleStatus_skipped" type="checkbox" data-toggle="collapse" href=".skipped" aria-expanded="true" aria-controls=".skipped"> </input>
+                                                          <span id="loadedStatus_skipped" class="badge badge-warning"> </span>
+
+                  </li>
+               </ul>
+<!--             <form class="form-inline my-2 my-lg-0">
+              <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+              <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form> -->
+        </nav>
+       <div class="row nav nav-pills">
+          <div class=" nav-item nav-link col-2"> #</div>
+          <div class="nav-item nav-link col-6">API URL</div>
+          <div class="nav-item nav-link col-2">Result</div>
+          <div class="nav-item nav-link col-2" align="right">Duration (ms)</div>
+        </div>
+      </div>
+    
+        <div class="card-body" id="test-results-table" >
+        
+        </div>
+        
+        </div> 
+        <!--
+        <table class="table table-bordered table-striped mb-5" id="test-results-table">
+          <thead>
+            <th onclick="sortTable()"> Method Priority </th>
+            <th>Method Name</th>
+            <th>Results</th>
+            <th width="120">Duration (s)</th>
+          </thead>
+          <tbody></tbody>
+        </table>
+        -->
+
+<!--         <h1>Test methods</h1> -->
+<!--         <div id="test-method-results-list"></div>     -->
+    </div>
+
+    <footer>
+      <div class="card-footer">
+        <div id="load_more" class="btn btn-primary btn-block" onclick="getMoreResults()"> Load More </div>
+        </div>
+    </footer>
+
+    <div class="modal fade" id="myModal" role="dialog" style="width:90%; height:100%;">
+        <div class="modal-dialog modal-lg " style="width:90%; height:90%" >
+
+          <!-- Modal content-->
+          <div class="modal-content" style="width:90%; height:90%">
+            <div class="modal-header" >
+                <div class="modal-title"> </div>
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body" style="width:90%; height:90%">
+              <p>Some text in the modal.</p>
+            </div>
+<!--             <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div> -->
+          </div>
+
+        </div>
+    </div>
+
+
+    <script type="text/javascript">
+
+      var loadedRows = 0;
+      var successRows = 0;
+      var failureRows = 0;
+      var skippedRows = 0;
+      
+      var loadSteps = 50;
+
+
+      var successImageBase64 = "PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTkuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iTGF5ZXJfMSIgeD0iMHB4IiB5PSIwcHgiIHZpZXdCb3g9IjAgMCA0MjYuNjY3IDQyNi42NjciIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDQyNi42NjcgNDI2LjY2NzsiIHhtbDpzcGFjZT0icHJlc2VydmUiIHdpZHRoPSI1MTJweCIgaGVpZ2h0PSI1MTJweCI+CjxwYXRoIHN0eWxlPSJmaWxsOiM2QUMyNTk7IiBkPSJNMjEzLjMzMywwQzk1LjUxOCwwLDAsOTUuNTE0LDAsMjEzLjMzM3M5NS41MTgsMjEzLjMzMywyMTMuMzMzLDIxMy4zMzMgIGMxMTcuODI4LDAsMjEzLjMzMy05NS41MTQsMjEzLjMzMy0yMTMuMzMzUzMzMS4xNTcsMCwyMTMuMzMzLDB6IE0xNzQuMTk5LDMyMi45MThsLTkzLjkzNS05My45MzFsMzEuMzA5LTMxLjMwOWw2Mi42MjYsNjIuNjIyICBsMTQwLjg5NC0xNDAuODk4bDMxLjMwOSwzMS4zMDlMMTc0LjE5OSwzMjIuOTE4eiIvPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8L3N2Zz4K";
+      var failureImageBase64 = "PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTkuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDUwIDUwIiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCA1MCA1MDsiIHhtbDpzcGFjZT0icHJlc2VydmUiIHdpZHRoPSI1MTJweCIgaGVpZ2h0PSI1MTJweCI+CjxjaXJjbGUgc3R5bGU9ImZpbGw6I0Q3NUE0QTsiIGN4PSIyNSIgY3k9IjI1IiByPSIyNSIvPgo8cG9seWxpbmUgc3R5bGU9ImZpbGw6bm9uZTtzdHJva2U6I0ZGRkZGRjtzdHJva2Utd2lkdGg6MjtzdHJva2UtbGluZWNhcDpyb3VuZDtzdHJva2UtbWl0ZXJsaW1pdDoxMDsiIHBvaW50cz0iMTYsMzQgMjUsMjUgMzQsMTYgICAiLz4KPHBvbHlsaW5lIHN0eWxlPSJmaWxsOm5vbmU7c3Ryb2tlOiNGRkZGRkY7c3Ryb2tlLXdpZHRoOjI7c3Ryb2tlLWxpbmVjYXA6cm91bmQ7c3Ryb2tlLW1pdGVybGltaXQ6MTA7IiBwb2ludHM9IjE2LDE2IDI1LDI1IDM0LDM0ICAgIi8+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+Cjwvc3ZnPgo=";
+
+      var displayNetworkEvent = function(networkEvent, methodName, type, payload){
+        
+        var domId = type + "_" + methodName; 
+        var requestId = networkEvent.requestId;
+        var clazz = networkEvent.clazz;
+        var resourceType = networkEvent.resourceType;
+        var requestUrl = networkEvent.requestUrl;
+        var headers = networkEvent.headers;
+        var postData = networkEvent.postData;
+        var method = networkEvent.method;
+        var headerSize = networkEvent.headers.length;
+        var serverStatus = networkEvent.status;
+
+        var eventTemplate ="";
+        eventTemplate += "<div class='network-event-card card'>";
+        eventTemplate += `
+        <div class='card-header bg-secondary text-white'> <b>${type}</b></div>`
+
+//         Can be used if URL needs to be displayed 
+             //<div class="row"> 
+//             <div class="col-2 btn" style="background-color:lavender;"> 
+//                ${method}
+//             </div>
+//             <div class="col-10 text-break" style="background-color:lavender;">
+//                ${requestUrl}
+//             </div>
+//         </div>`;
+
+//         var navTabTemplate = `<div class="row"> 
+            
+//             <div class="col-3 btn btn-outline-primary" data-toggle="collapse" href="#${domId}" aria-expanded="false" aria-controls="${domId}"> <b>Event Info </b></div>
+//             <div class="col-3 btn btn-outline-primary" data-toggle="collapse" href="#${domId}_headers" aria-expanded="false" aria-controls="${domId}_headers"> <b>Headers </b> </div>`;
+
+
+//          if(type == "response"){
+//                  navTabTemplate += `<div class="col-3 btn btn-outline-primary" data-toggle="collapse" href="#${domId}_payload" aria-expanded="false" aria-controls="${domId}_payload"><b> Payload </b> </div>`;
+//          }
+//          navTabTemplate +=`
+//             </div>
+//          `
+
+         
+        
+       
+        var eventInfoTemplate = "";
+        if(type=="response"){
+             eventInfoTemplate += `
+            <div class="card text-dark">
+                <div class="row"> 
+                    <div class="col"> 
+                        <b> MIME:</b> <div class="btn btn-outline-dark">${resourceType}</div>
+                    </div>
+                    <div class="col"> 
+                        <b> Status:</b> <div class="btn btn-outline-dark">${serverStatus}</div>
+                    </div>
+                </div>
+            </div>
+            `; 
+        }
+        else{
+             eventInfoTemplate += `
+            <div class="card text-dark">
+                <div class="row"> 
+                    <div class="col"> 
+                         <b> Method:</b> <div class="btn btn-outline-dark">${method}</div>
+                    </div>
+                    <div class="col"> 
+                        <b> MIME:</b> <div class="btn btn-outline-dark">${resourceType}</div>
+                    </div>
+                    <div class="col"> 
+                       <b> BrowserEvent:</b> <div class="btn btn-outline-dark">${clazz}</div>
+                    </div>
+                    <div class="col">
+                        <b>Post Data:</b> <div class="btn btn-outline-dark">${postData}</div>
+                    </div>
+                    <div class="col"> 
+                       <b> RequestId:</b> <div class="btn btn-outline-dark">${requestId}</div>
+                    </div>
+                </div>
+            </div>
+            `; 
+        }
+           
+
+        var headerTotalTemplate = '';
+        var headerTemplate = '';
+
+        for(header in headers){
+          var name = headers[header].name;
+          var value = headers[header].value;
+          headerTemplate += `<tr>
+            <td>${header}</td>
+            <td>${name}</td>
+            <td>${value}</td>
+          </tr>`;
+        }
+        
+         headerTotalTemplate += `
+        <div class="card table-responsive">
+            <div class="overflow-auto" style="height:300px">
+                <table class="table table-striped table-sm ">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Name</th>
+                      <th>Value</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    ${headerTemplate}
+                  </tbody>
+                </table>
+            </div>
+          </div>
+        `;
+
+        var payloadTemplate = `
+        <div class="card">
+
+            <div class="row">
+                <button type="button" data-toggle="modal" data-target="#myModal" data-payload="${payload}" data-mode="text"> Full Screen <i class="fas fa-compress-arrows-alt"></i> </button>  
+
+                <button type="button" data-toggle="modal" data-target="#myModal" data-payload="${payload}" data-mode="html"> Render HTML <i class="fas fa-desktop"></i></button>
+            </div>
+            <object data="${payload}" height="200">
+                Not supported
+            </object>
+          </div>
+        `;
+
+        eventTemplate += `<!-- Nav tabs -->
+            <ul class="nav nav-tabs">
+              <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" href="#${domId}">Info</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#${domId}_headers">Headers <span class="badge badge-info">${headerSize}</span></a> 
+              </li>`;
+
+          if(type=="response"){
+              eventTemplate += `
+              <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#${domId}_payload">Payload</a>
+              </li>`;
+          }
+
+        eventTemplate += `</ul>
+
+            <!-- Tab panes -->
+            <div class="tab-content">
+              <div class="tab-pane container active" id="${domId}">${eventInfoTemplate}</div>
+              <div class="tab-pane container fade" id="${domId}_headers">${headerTotalTemplate}</div>
+              <div class="tab-pane container fade" id="${domId}_payload">${payloadTemplate}</div>
+            </div>`;
+
+
+        eventTemplate += "</div>"; //close eventTemplate div
+
+        return eventTemplate;
+
+      }
+
+      var getInnerHtml = function(methodInfo){
+          var innerHTML = "";
+           var payload = "./responses/"+ methodInfo.id + "_" + methodInfo.request.requestId;
+            try{
+              innerHTML += displayNetworkEvent(methodInfo.request, methodInfo.id, "request", null);
+          }catch(exception){
+                innerHTML += "Exception parsing request: " + exception;
+          }
+        try{
+                          innerHTML += displayNetworkEvent(methodInfo.response, methodInfo.id, "response", payload);
+
+        }
+        catch(exception){
+                innerHTML += "Exception parsing response: " + exception;
+          }
+        return innerHTML;
+         }
+
+     
+      var getMethodInfo = function(methodInfo, lazyLoad){
+        var methodName = methodInfo.id;
+
+        var testMethodInfoTemplate = "";
+        `
+         <div class="row">
+           <div class="col-1 sm bg-info" data-toggle="collapse" href="#method-test-results-${methodName}" aria-expanded="true" aria-controls="method-test-results-${methodName}"> </div>
+        `;
+        if(!lazyLoad){
+            testMethodInfoTemplate += `<div id="method-test-results-${methodName}" class="collapse col-10 mt-5 test-details" loaded="true">`
+            testMethodInfoTemplate += getInnerHtml(methodInfo);
+        }
+        else{
+            testMethodInfoTemplate += `<div id="method-test-results-${methodName}" class="collapse col-10 mt-5 test-details" loaded="false">`
+            testMethodInfoTemplate += `<div class="card">Loading Details ..</div>`;
+        }
+
+        testMethodInfoTemplate += `
+        </div>
+        </div>`; // Twp div ( row and column)
+        return testMethodInfoTemplate;
+     }
+
+      var getRowTemplate = function(methodInfo) {
+        var statusIconImgBase64 = methodInfo.status.toLowerCase() == "success" ? successImageBase64 : failureImageBase64;
+        var statusMessage = "";
+        if(methodInfo.response){
+            statusMessage += " - " + methodInfo.response.status;
+        }
+        if(methodInfo.message){
+            statusMessage += `<br /><span class="badge badge-pill badge-danger text-wrap">${methodInfo.message}</span>`;
+        }
+        var methodInfoString = getMethodInfo(methodInfo, true);
+        var requestUrl = unescape(methodInfo.request.requestUrl);
+        var rowTemplate = `
+
+          <div class="border row collapse all ${methodInfo.status.toLowerCase()}">
+          <div class="col-2" data-toggle="collapse" href="#method-test-results-${methodInfo.id}" aria-expanded="true" aria-controls="method-test-results-${methodInfo.id}"> 
+             <div class="text-break" >${methodInfo.id}</div>
+          </div>
+          <div class="col-6" data-toggle="collapse" href="#method-test-results-${methodInfo.id}" aria-expanded="true" aria-controls="method-test-results-${methodInfo.id}"> 
+             <a href="${requestUrl}"class="text-break" target="_blank">${methodInfo.request.method} - ${requestUrl}</a>
+          </div>
+          <div class="col-2" data-toggle="collapse" href="#method-test-results-${methodInfo.id}" aria-expanded="true" aria-controls="method-test-results-${methodInfo.id}"><img src="data:image/svg+xml;utf8;base64,${statusIconImgBase64}" width="16" height="16" alt="${methodInfo.status}" title="${methodInfo.status}" />
+            ${methodInfo.status} ${statusMessage}</div>
+           <div class="col-2" data-toggle="collapse" href="#method-test-results-${methodInfo.id}" aria-expanded="true" aria-controls="method-test-results-${methodInfo.id}"> 
+             <div class="text-break" align="right" >${methodInfo.duration}</div>
+          </div>
+
+          ${methodInfoString}
+          </div>
+        `;
+        /*
+
+        <tr>
+          <td>${methodInfo.methodNumber} </td>
+
+          <td><a class="btn btn-primary" data-toggle="collapse" href="#method-test-results-${methodInfo.methodName}" aria-expanded="false" aria-controls="method-test-results-${methodInfo.methodName}">${methodInfo.methodName}</a></td>
+          <td>
+            <img src="data:image/svg+xml;utf8;base64,${statusIconImgBase64}" width="16" height="16" alt="${methodInfo.testStatus}" title="${methodInfo.testStatus}" />
+            ${methodInfo.testStatus} ${statusMessage}
+          </td>
+          <td align="right">${methodInfo.duration}</td>
+        </tr>
+        */
+        return rowTemplate;
+      }
+
+      var getOverallResult = function(methods){
+        methodResults = methods.map(function(method){return {name: method.request.requestUrl, status: method.status};});
+        methodIndices = methods.map(function(method){return method.id;});
+
+        totalDuration = methods.reduce(function(totalTime, result){return totalTime+result.duration;}, 0)
+
+        failed = methodResults.filter(function(result){return result.status.toUpperCase()==="FAILURE"});
+        passed = methodResults.filter(function(result){return result.status.toUpperCase()==="SUCCESS"});
+        skipped = methodResults.filter(function(result){return result.status.toUpperCase()==="SKIPPED"});     
+        
+        var testMethodInfoTemplate = `
+         <div class="row">
+           <div class="col "> <div class="btn btn-info" data-toggle="collapse" href=".all" aria-expanded="true" aria-controls=".all"> Total </div> <span class="badge badge-pill badge-info"> ${methodResults.length}</span> </div>
+           <div class="col "> <div class="btn btn-success" data-toggle="collapse" href=".success" aria-expanded="true" aria-controls=".success"> Passed </div> <span class="badge badge-pill badge-primary">${passed.length} </span> </div>
+           <div class="col "> <div class="btn btn-danger" data-toggle="collapse" href=".failure" aria-expanded="true" aria-controls=".failure"> Failed </div> <span class="badge badge-pill badge-danger">${failed.length}</span>  </div>
+           <div class="col "> <div class="btn btn-warning" data-toggle="collapse" href=".skipped" aria-expanded="true" aria-controls=".skipped"> Skipped </div> <span class="badge badge-pill badge-warning"> ${skipped.length} </span> </div>
+           <div class="col font-weight-bold"> Duration(ms) : ${totalDuration} </div>
+        </div>
+        `;
+        return testMethodInfoTemplate;
+      }
+
+
+      var getMoreResults = function(){
+        var i = 0;
+        for(i; i<loadSteps; i++){
+          // for (var i = 0; i < methods.length; i++) {
+            if(loadedRows + i >= methods.length){
+              $("#load_more").prop( "disabled", true);
+              break;
+            }
+            var methodInfo = methods[i + loadedRows];
+
+            try{
+                switch(methodInfo.status.toLowerCase()){
+                    case "success":
+                        successRows += 1;
+                        break;
+                    case "failure":
+                        failureRows += 1;
+                        break;
+                    case "skipped":
+                        skippedRows += 1;
+                        break;
+                }
+
+            }catch(exception){
+
+            }
+
+            // Populate the rows of the table for summary
+            var tbody = document.querySelector("#test-results-table");
+            tbody.innerHTML += getRowTemplate(methodInfo);
+
+           
+            // Populate the method info
+        }
+        loadedRows += i;
+    //         var testMethodInfoParent = document.querySelector("#test-method-results-list");
+    //         tbody.innerHTML += getMethodInfo(methodInfo);
+
+        // Add event handler to newly added methods
+        $(".test-details").on('shown.bs.collapse', function (event) {
+            console.log("it works");
+            try{
+                if(event.target.attributes.loaded.value === "false"){
+                    var methodInfo = methods[methodIndices.indexOf(parseInt(event.target.attributes.id.value.split("-")[3]))];
+                   event.target.innerHTML = getInnerHtml(methodInfo);
+                   event.target.attributes.loaded.value = "true";
+                }
+               }
+            catch(exception){console.log("error loading details" + exception)}
+        });
+
+        // Reset the collapse values for all methods
+        $('.all').collapse('show');
+        $("#loadedStatus")[0].innerHTML = loadedRows;
+//         $('#toggleStatus_all')[0].checked = true;
+        $('#toggleStatus_success')[0].checked = true;
+        $('#toggleStatus_failure')[0].checked = true;
+        $('#toggleStatus_skipped')[0].checked = true;
+
+//         $("#loadedStatus_all")[0].innerHTML = loadedRows;
+        $("#loadedStatus_success")[0].innerHTML = successRows;
+        $("#loadedStatus_failure")[0].innerHTML = failureRows;
+        $("#loadedStatus_skipped")[0].innerHTML = skippedRows;
+
+      }
+
+
+      var jsonContents = `${diff_json}`;
+      var parsedJson = JSON.parse(jsonContents);
+//       var methodNames = Object.keys(parsedJson);
+      var codeDiffElements = [];
+      var methods = parsedJson;
+
+      var overall = document.querySelector("#overallResult");
+      overall.innerHTML = getOverallResult(methods);
+//       var overallResult = 
+
+
+      getMoreResults();
+
+
+       $('#myModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget) // Button that triggered the modal
+            var payload = button.data('payload') // Extract info from data-* attributes
+            var mode = button.data("mode");
+
+          // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+          // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+            var modal = $(this)
+//           modal.find('.modal-title').text('New message to ' + recipient)
+
+            if(mode=="html"){
+                 modal.find('.modal-title').text("Rendered Output");
+                 modal.find('.modal-body')[0].innerHTML = 
+            `<iframe src="${payload}.html" title="Rendered Output"  style="width:100%; height:100%;"></iframe>`;
+            }else{
+                modal.find('.modal-title').text("Raw Output");
+                modal.find('.modal-body')[0].innerHTML = 
+                  `  <object data="${payload}" type="text/html" style="width:100%;height:100%">
+                        Not supported
+                    </object>`;
+            }
+         
+        });
+
+       $("#themeSwitch").on("click", function(event){
+           console.log("checked"+event.target.checked);
+           if(event.target.checked){
+               $("#summary_card").addClass("bg-dark");
+               $("#summary_card").addClass("text-light");
+               $("#details_table_card").addClass("bg-dark");
+               $("#details_table_card").addClass("text-light");
+               $("#summary_card").removeClass("text-dark");
+               $("#details_table_card").removeClass("text-dark");
+           }
+           else{
+               $("#summary_card").removeClass("bg-dark");
+               $("#summary_card").removeClass("text-light");
+               $("#details_table_card").removeClass("bg-dark");
+               $("#details_table_card").removeClass("text-light");
+               $("#summary_card").addClass("text-dark");
+               $("#details_table_card").addClass("text-dark");
+           }
+//            $("#summary_card").attr("class", "border card bg-dark text-white");
+//            $("#details_table_card").attr("class", "border card bg-dark text-white");
+        });
+
+
+        $("#themeSwitch")[0].click(); // Set the switch state
+        $("#themeSwitch")[0].click(); // start with light mode
+
+
+     
+    </script>
+
+  </body>
+
+</html>

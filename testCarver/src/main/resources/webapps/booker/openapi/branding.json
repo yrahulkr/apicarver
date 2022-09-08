@@ -1,0 +1,194 @@
+{
+    "components": {
+        "schemas": {
+            "Branding": {
+                "properties": {
+                    "contact": {
+                        "$ref": "#/components/schemas/Contact"
+                    },
+                    "description": {
+                        "maxLength": 500,
+                        "minLength": 3,
+                        "pattern": "[a-zA-Z,&. ]*",
+                        "type": "string"
+                    },
+                    "logoUrl": {
+                        "type": "string"
+                    },
+                    "map": {
+                        "$ref": "#/components/schemas/Map"
+                    },
+                    "name": {
+                        "maxLength": 100,
+                        "minLength": 3,
+                        "pattern": "[A-Za-z& ]*",
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "description",
+                    "logoUrl",
+                    "name"
+                ],
+                "type": "object"
+            },
+            "Contact": {
+                "properties": {
+                    "address": {
+                        "maxLength": 200,
+                        "minLength": 10,
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "maxLength": 40,
+                        "minLength": 3,
+                        "pattern": "[A-Za-z& ]*",
+                        "type": "string"
+                    },
+                    "phone": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "address",
+                    "email",
+                    "name",
+                    "phone"
+                ],
+                "type": "object"
+            },
+            "Error": {
+                "properties": {
+                    "error": {
+                        "type": "string"
+                    },
+                    "errorCode": {
+                        "format": "int32",
+                        "type": "integer"
+                    },
+                    "errorMessage": {
+                        "type": "string"
+                    },
+                    "fieldErrors": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array"
+                    }
+                },
+                "type": "object"
+            },
+            "Map": {
+                "properties": {
+                    "latitude": {
+                        "format": "double",
+                        "type": "number"
+                    },
+                    "longitude": {
+                        "format": "double",
+                        "type": "number"
+                    }
+                },
+                "required": [
+                    "latitude",
+                    "longitude"
+                ],
+                "type": "object"
+            }
+        }
+    },
+    "info": {
+        "title": "OpenAPI definition",
+        "version": "v0"
+    },
+    "openapi": "3.0.1",
+    "paths": {
+        "/": {
+            "get": {
+                "operationId": "getBranding",
+                "responses": {
+                    "200": {
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Branding"
+                                }
+                            }
+                        },
+                        "description": "OK"
+                    },
+                    "400": {
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        },
+                        "description": "Bad Request"
+                    }
+                },
+                "tags": [
+                    "branding-controller"
+                ]
+            },
+            "put": {
+                "operationId": "updateBranding",
+                "parameters": [
+                    {
+                        "in": "cookie",
+                        "name": "token",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Branding"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        },
+                        "description": "OK"
+                    },
+                    "400": {
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        },
+                        "description": "Bad Request"
+                    }
+                },
+                "tags": [
+                    "branding-controller"
+                ]
+            }
+        }
+    },
+    "servers": [
+        {
+            "description": "Generated server url",
+            "url": "http://localhost:3002/branding"
+        }
+    ]
+}

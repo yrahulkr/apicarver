@@ -1,0 +1,37 @@
+<html>
+<head>
+    <title>Index</title>
+</head>
+<body>
+<div>
+    <h1>Index</h1>
+    <p>This is the index and it shows two more sites:</p>
+    <div class='rbc-calendar'>
+        <div class='row'>
+       	 <div class='rbc-day-bg' draggable="true" ondragstart="drag(event)" ondrop="drop(event)" ondragover="allowDrop(event)"> drag </div>
+       	 <div > middle element </div>
+       	 <div class='rbc-day-bg' draggable ="true" ondragstart="drag(event)" id="div1" ondrop="drop(event)" ondragover="allowDrop(event)"> drop </div>	
+        </div>
+    </div>
+    <input type="text"></input>
+    <button id='myBtn' onclick="location.href = 'b.html' ;" disabled> submit </button>
+</div>
+<script type="text/javascript" src="../lib/jquery-2.0.3.min.js"></script>
+	
+<script>
+	function allowDrop(ev) {
+  ev.preventDefault();
+}
+var dragStart = false;
+function drag(ev) {
+	dragStart = true;
+}
+
+function drop(ev) {
+  	ev.preventDefault();
+	$('#myBtn')[0].disabled=false;
+	dragStart = false;
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,350 @@
+{
+    "components": {
+        "schemas": {
+            "Count": {
+                "properties": {
+                    "count": {
+                        "format": "int32",
+                        "type": "integer"
+                    }
+                },
+                "type": "object"
+            },
+            "Error": {
+                "properties": {
+                    "error": {
+                        "type": "string"
+                    },
+                    "errorCode": {
+                        "format": "int32",
+                        "type": "integer"
+                    },
+                    "errorMessage": {
+                        "type": "string"
+                    },
+                    "fieldErrors": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array"
+                    }
+                },
+                "type": "object"
+            },
+            "Message": {
+                "properties": {
+                    "description": {
+                        "maxLength": 2000,
+                        "minLength": 20,
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "messageid": {
+                        "format": "int32",
+                        "type": "integer"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "phone": {
+                        "maxLength": 21,
+                        "minLength": 11,
+                        "type": "string"
+                    },
+                    "subject": {
+                        "maxLength": 100,
+                        "minLength": 5,
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "description",
+                    "email",
+                    "name",
+                    "phone",
+                    "subject"
+                ],
+                "type": "object"
+            },
+            "MessageSummary": {
+                "properties": {
+                    "id": {
+                        "format": "int32",
+                        "type": "integer"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "read": {
+                        "type": "boolean"
+                    },
+                    "subject": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "Messages": {
+                "properties": {
+                    "messages": {
+                        "items": {
+                            "$ref": "#/components/schemas/MessageSummary"
+                        },
+                        "type": "array"
+                    }
+                },
+                "type": "object"
+            }
+        }
+    },
+    "info": {
+        "title": "OpenAPI definition",
+        "version": "v0"
+    },
+    "openapi": "3.0.1",
+    "paths": {
+        "/": {
+            "get": {
+                "operationId": "getMessages",
+                "responses": {
+                    "200": {
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Messages"
+                                }
+                            }
+                        },
+                        "description": "OK"
+                    },
+                    "400": {
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        },
+                        "description": "Bad Request"
+                    }
+                },
+                "tags": [
+                    "message-controller"
+                ]
+            },
+            "post": {
+                "operationId": "createMessage",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Message"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Message"
+                                }
+                            }
+                        },
+                        "description": "OK"
+                    },
+                    "400": {
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        },
+                        "description": "Bad Request"
+                    }
+                },
+                "tags": [
+                    "message-controller"
+                ]
+            }
+        },
+        "/count": {
+            "get": {
+                "operationId": "getCount",
+                "responses": {
+                    "200": {
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Count"
+                                }
+                            }
+                        },
+                        "description": "OK"
+                    },
+                    "400": {
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        },
+                        "description": "Bad Request"
+                    }
+                },
+                "tags": [
+                    "message-controller"
+                ]
+            }
+        },
+        "/{id}": {
+            "delete": {
+                "operationId": "deleteMessage",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "schema": {
+                            "format": "int32",
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "in": "cookie",
+                        "name": "token",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "string"
+                                }
+                            }
+                        },
+                        "description": "OK"
+                    },
+                    "400": {
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        },
+                        "description": "Bad Request"
+                    }
+                },
+                "tags": [
+                    "message-controller"
+                ]
+            },
+            "get": {
+                "operationId": "getMessage",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "schema": {
+                            "format": "int32",
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "string"
+                                }
+                            }
+                        },
+                        "description": "OK"
+                    },
+                    "400": {
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        },
+                        "description": "Bad Request"
+                    }
+                },
+                "tags": [
+                    "message-controller"
+                ]
+            }
+        },
+        "/{id}/read": {
+            "put": {
+                "operationId": "markAsRead",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "schema": {
+                            "format": "int32",
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "in": "cookie",
+                        "name": "token",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "string"
+                                }
+                            }
+                        },
+                        "description": "OK"
+                    },
+                    "400": {
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        },
+                        "description": "Bad Request"
+                    }
+                },
+                "tags": [
+                    "message-controller"
+                ]
+            }
+        }
+    },
+    "servers": [
+        {
+            "description": "Generated server url",
+            "url": "http://localhost:3006/message"
+        }
+    ]
+}

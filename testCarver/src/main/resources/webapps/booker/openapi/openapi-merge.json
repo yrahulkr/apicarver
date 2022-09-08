@@ -1,0 +1,41 @@
+{
+  "inputs": [
+    {
+      "inputFile": "./auth.json",
+      "pathModification": {
+        "prepend": "/auth"
+      }
+    },
+    {
+      "inputFile": "./booking.json",
+      "pathModification": {
+        "prepend": "/booking"
+      }
+    },
+    {
+      "inputFile": "./branding.json",
+      "pathModification": {
+        "prepend": "/branding"
+      }
+    },
+    {
+      "inputFile": "./message.json",
+      "pathModification": {
+        "prepend": "/message"
+      }
+    },
+    {
+      "inputFile": "./report.json",
+      "pathModification": {
+        "prepend": "/report"
+      }
+    },
+    {
+      "inputFile": "./room.json",
+      "pathModification": {
+        "prepend": "/room"
+      }
+    }
+  ],
+  "output": "./openapi.yml"
+}

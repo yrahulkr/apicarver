@@ -1,0 +1,389 @@
+{
+    "components": {
+        "schemas": {
+            "Booking": {
+                "properties": {
+                    "bookingdates": {
+                        "$ref": "#/components/schemas/BookingDates"
+                    },
+                    "bookingid": {
+                        "format": "int32",
+                        "type": "integer"
+                    },
+                    "depositpaid": {
+                        "type": "boolean"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "firstname": {
+                        "maxLength": 18,
+                        "minLength": 3,
+                        "type": "string"
+                    },
+                    "lastname": {
+                        "maxLength": 30,
+                        "minLength": 3,
+                        "type": "string"
+                    },
+                    "phone": {
+                        "type": "string"
+                    },
+                    "roomid": {
+                        "format": "int32",
+                        "minimum": 1,
+                        "type": "integer"
+                    }
+                },
+                "required": [
+                    "depositpaid",
+                    "firstname",
+                    "lastname"
+                ],
+                "type": "object"
+            },
+            "BookingDates": {
+                "properties": {
+                    "checkin": {
+                        "format": "date",
+                        "type": "string"
+                    },
+                    "checkout": {
+                        "format": "date",
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "checkin",
+                    "checkout"
+                ],
+                "type": "object"
+            },
+            "CreatedBooking": {
+                "properties": {
+                    "booking": {
+                        "$ref": "#/components/schemas/Booking"
+                    },
+                    "bookingid": {
+                        "format": "int32",
+                        "type": "integer"
+                    }
+                },
+                "type": "object"
+            },
+            "Error": {
+                "properties": {
+                    "error": {
+                        "type": "string"
+                    },
+                    "errorCode": {
+                        "format": "int32",
+                        "type": "integer"
+                    },
+                    "errorMessage": {
+                        "type": "string"
+                    },
+                    "fieldErrors": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array"
+                    }
+                },
+                "type": "object"
+            }
+        }
+    },
+    "info": {
+        "title": "OpenAPI definition",
+        "version": "v0"
+    },
+    "openapi": "3.0.1",
+    "paths": {
+        "/": {
+            "get": {
+                "operationId": "getBookings",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "roomid",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "in": "cookie",
+                        "name": "token",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "string"
+                                }
+                            }
+                        },
+                        "description": "OK"
+                    },
+                    "400": {
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        },
+                        "description": "Bad Request"
+                    }
+                },
+                "tags": [
+                    "booking-controller"
+                ]
+            },
+            "post": {
+                "operationId": "createBooking",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Booking"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "string"
+                                }
+                            }
+                        },
+                        "description": "OK"
+                    },
+                    "400": {
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        },
+                        "description": "Bad Request"
+                    }
+                },
+                "tags": [
+                    "booking-controller"
+                ]
+            }
+        },
+        "/summary": {
+            "get": {
+                "operationId": "getSummaries",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "roomid",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "string"
+                                }
+                            }
+                        },
+                        "description": "OK"
+                    },
+                    "400": {
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        },
+                        "description": "Bad Request"
+                    }
+                },
+                "tags": [
+                    "booking-controller"
+                ]
+            }
+        },
+        "/{id}": {
+            "delete": {
+                "operationId": "deleteBooking",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "schema": {
+                            "format": "int32",
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "in": "cookie",
+                        "name": "token",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "string"
+                                }
+                            }
+                        },
+                        "description": "OK"
+                    },
+                    "400": {
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        },
+                        "description": "Bad Request"
+                    }
+                },
+                "tags": [
+                    "booking-controller"
+                ]
+            },
+            "get": {
+                "operationId": "getBooking",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "schema": {
+                            "format": "int32",
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "in": "cookie",
+                        "name": "token",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "string"
+                                }
+                            }
+                        },
+                        "description": "OK"
+                    },
+                    "400": {
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        },
+                        "description": "Bad Request"
+                    }
+                },
+                "tags": [
+                    "booking-controller"
+                ]
+            },
+            "put": {
+                "operationId": "updateBooking",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "schema": {
+                            "format": "int32",
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "in": "cookie",
+                        "name": "token",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Booking"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CreatedBooking"
+                                }
+                            }
+                        },
+                        "description": "OK"
+                    },
+                    "400": {
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        },
+                        "description": "Bad Request"
+                    }
+                },
+                "tags": [
+                    "booking-controller"
+                ]
+            }
+        }
+    },
+    "servers": [
+        {
+            "description": "Generated server url",
+            "url": "http://localhost:3000/booking"
+        }
+    ]
+}
